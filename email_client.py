@@ -4,6 +4,7 @@ from email.message import EmailMessage
 import smtplib
 from config import EMAIL_ADDRESS, EMAIL_APP_PASS
 from datetime import datetime
+from pprint import pprint as pp
 
 class EmailClient:
     def __init__(self):
@@ -16,7 +17,7 @@ class EmailClient:
         # _, message_nums = self.imap.search(None, f'(UNSEEN ON {today_str})')
         _, message_nums = self.imap.search(None, "ALL")
         messages = []
-        for num in message_nums[0].split():
+        for num in reversed(message_nums[0].split()): # TODO: REMOVE REVERSE
             _, data = self.imap.fetch(num, "(RFC822)")
             raw_email = data[0][1]
             msg = email.message_from_bytes(raw_email)
@@ -26,9 +27,9 @@ class EmailClient:
 
     def send_reply(self, original_msg, body):
         reply = EmailMessage()
-        reply["Subject"] = "Re: " + original_msg["Subject"]
+        reply["Subject"] = "Re: " + original_msg["subject"]
         reply["From"] = EMAIL_ADDRESS
-        reply["To"] = original_msg["From"]
+        reply["To"] = original_msg["sender"]
         reply.set_content(body)
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:

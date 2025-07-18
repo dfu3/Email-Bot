@@ -41,7 +41,7 @@ Create a `.env` file in the project root:
 
 ```env
 EMAIL_ADDRESS=your-email@gmail.com
-EMAIL_PASSWORD=your-app-password
+EMAIL_APP_PASS=your-app-password
 OPENAI_API_KEY=your-openai-api-key
 ```
 
@@ -50,27 +50,9 @@ OPENAI_API_KEY=your-openai-api-key
 
 ```bash
 python main.py
-```
-
----
-
-## 📄 Example Output
-
-```
-Reply:
-Hi Wilkin, thanks for reaching out. We'll look into the toilet issue immediately. Once resolved, we’ll notify you and you can proceed with rent payment.
-
-Action Items:
-[
-  {
-    "type": "maintenance",
-    "issue": "reported issue",
-    "address": "parsed from email"
-  }
-]
-```
 
 Action items are also written to a growing JSON file: `actions_log.json`
+```
 
 ---
 

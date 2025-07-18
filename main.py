@@ -5,16 +5,18 @@ from action_items import ActionItemGenerator
 from datetime import datetime
 import os
 import json
+from pprint import pprint as pp
 
 ACTIONS_FILE = "actions_log.json"
 
-def save_actions_to_file(email_data, actions):
+def save_actions_to_file(email_data, unit, actions):
     timestamp = datetime.now().isoformat()
     entry = {
         "timestamp": timestamp,
         "email_subject": email_data["subject"],
         "email_sender": email_data["sender"],
-        "actions": actions
+        "actions": actions,
+        "unit": unit
     }
 
     # Load existing entries if file exists
@@ -41,15 +43,17 @@ def main():
 
     messages = email_client.fetch_unread_messages()
     for msg in messages:
-        parsed = processor.parse_email(msg)
-        reply = responder.generate_reply(parsed)
-        actions = action_gen.generate_actions(parsed)
+        parsed_email = processor.parse_email(msg)
+        reply_raw = responder.generate_reply(parsed_email)
+        reply, action_data = responder.clean_reply(reply_raw)
+        pp(action_data)
+        unit, actions = responder.parse_unit_and_actions(action_data)
 
-        print(f"\nReply:\n{reply}\n")
-        print(f"Action Items:\n{actions}\n")
+        pp(f"\nReply:\n{reply}\n")
+        pp(f"Action Items for Unit {unit}:\n{actions}\n")
 
-        save_actions_to_file(parsed, actions)
-        email_client.send_reply(parsed, reply)
+        save_actions_to_file(parsed_email, unit, actions)
+        email_client.send_reply(parsed_email, reply)
 
 if __name__ == "__main__":
     main()
