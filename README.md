@@ -4,24 +4,22 @@ Python service that connects to an email inbox, triages unread messages, generat
 ## ✅ Features
 
 - Connects to Gmail using IMAP
-- Parses unread messages
+- Parses recnt unread messages
 - Uses GPT (OpenAI) to generate context-aware replies
-- Extracts action items (e.g., access, maintenance requests)
+- Generates action items (e.g., access, maintenance requests)
 - Sends email replies to tenants
-- Modular, testable architecture
 
----
 
 ## 🛠️ Setup Instructions
 
-### 1. Clone the Repo
+### 0. Prerequisites
 
-```bash
-git clone https://github.com/your-username/domos-email-assistant.git
-cd domos-email-assistant
-```
+- openAI account with API token
+- gmail account with imap enabled
+  - app password created for this google account
 
-### 2. Create a Virtual Environment (Recommended)
+
+### 1. Create Virtual Environment
 
 ```bash
 python -m venv venv
@@ -29,15 +27,15 @@ source venv/bin/activate  # macOS/Linux
 venv\Scripts\activate     # Windows
 ```
 
-### 3. Install Dependencies
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure Environment Variables
+### 3. Configure Environment Variables
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root (based on sample.env):
 
 ```env
 EMAIL_ADDRESS=your-email@gmail.com
@@ -45,27 +43,37 @@ EMAIL_APP_PASS=your-app-password
 OPENAI_API_KEY=your-openai-api-key
 ```
 
-
-### 5. Run the App
+### 4. Run the App
 
 ```bash
 python main.py
-
-Action items are also written to a growing JSON file: `actions_log.json`
 ```
+Action items are also written to a growing JSON file: `actions_log.json`
 
----
 
-### 🧪 Assumptions:
-- Property and tenant data can be mocked or inferred from email body
-- Email content is in English and follows loose structure
-- One user account (property manager) per inbox
+## ✨ Further Development:
+- Add NLP intent classification for more accurate action item detection
+- Add structured parsing of address from email text
+- Implement action-item followup logic (see TODO)
+- Integrate with real maintenance request systems
+- Add error logging and retry/backoff logic
+- Verbose unit testing
 
----
+## 🧠 AI Tools Used
+- **OpenAI gpt-3.5-turbo API**: To generate contextual replies from email bodies.
+- ChatGPT as code assistant for:
+  - inital boilder-plate
+  - some parsing syntax
+  - debugging
+  - exploring various library options
+- AI challenges:
+  - getting chatGPT to understand the 'meta-prompting' for the agent API
+  - leads to dilluted output quality as a result of being the extra degree of seperation 
 
 ## 🔧 Known Limitations
 
 - Simple address parsing (not using NLP libraries like spaCy)
-- Action item logic is hardcoded and keyword-based
+- No info retreval from extracted email context
+  - See __TODO__ in `action_mamnager.py` for intended fast follow
 - No tests included for brevity
 - No retry for failed IMAP/SMTP connections
