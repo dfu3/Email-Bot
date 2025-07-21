@@ -1,5 +1,5 @@
 # Email-Bot
-Python service that connects to an email inbox, triages unread messages, generates response, and triggers relevant workflows
+Python service that simulates property manager replying to tenant emails
 
 ## ✅ Features
 
@@ -74,6 +74,6 @@ Action items are also written to a growing JSON file: `actions_log.json`
 
 - Simple address parsing (not using NLP libraries like spaCy)
 - No info retreval from extracted email context
-  - See __TODO__ in `action_mamnager.py` for intended fast follow
+  - See __TODO__ in `action_mamnager.py` for intended fast follow logic
 - No tests included for brevity
 - No retry for failed IMAP/SMTP connections

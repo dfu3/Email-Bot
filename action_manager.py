@@ -28,8 +28,9 @@ class ActionManager():
 
         # TODO
         # check for actions that can be automated and generate followup com
-        # ex: how much is my rent -> lookup unit from data_store and send result in email
-        # then remove them from the list before adding to the log
+        # ex: how much is my rent:
+        # - lookup unit(already parsed) in data_store and send result in followup email
+        # - Remove action from the list before adding to the log
 
         self.action_log.append(entry)
 

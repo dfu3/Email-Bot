@@ -23,8 +23,10 @@ def main():
         pp(f"\nReply:\n{reply}\n")
         pp(f"Action Items for Unit {unit}:\n{actions}\n")
 
-        action_mgr.process_and_save(parsed_email, unit, actions)
+        # send email response
         email_client.send_reply(parsed_email, reply)
+        # saves action items to file
+        action_mgr.process_and_save(parsed_email, unit, actions)
 
 if __name__ == "__main__":
     main()

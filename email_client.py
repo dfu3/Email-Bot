@@ -4,7 +4,6 @@ from email.message import EmailMessage
 import smtplib
 from config import EMAIL_ADDRESS, EMAIL_APP_PASS, EMAIL_FILTER
 from datetime import datetime
-from pprint import pprint as pp
 
 class EmailClient:
     def __init__(self):
