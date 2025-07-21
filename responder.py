@@ -34,8 +34,6 @@ class Responder:
             Here's the email:
             Subject: {email_data['subject']}
             Body: {email_data['body']}"""
-        
-        # pp(prompt)
 
         try:
             response = self.client.chat.completions.create(
@@ -46,4 +44,5 @@ class Responder:
             return response.choices[0].message.content.strip()
         except Exception as e:
             print("OpenAI error:", e)
+            # TODO: Can extend this to create followup tasks
             return "Sorry, we're reviewing your request and will get back shortly."

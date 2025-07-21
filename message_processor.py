@@ -11,12 +11,11 @@ class MessageProcessor:
                 content_type = part.get_content_type()
                 content_disposition = str(part.get("Content-Disposition"))
 
-                # We want the plain-text body, not attachments
                 if content_type == "text/plain" and "attachment" not in content_disposition:
                     payload = part.get_payload(decode=True)
                     if payload:
                         body = payload.decode(part.get_content_charset() or "utf-8", errors="ignore")
-                        break  # Use the first plain-text part
+                        break
         else:
             payload = email_msg.get_payload(decode=True)
             if payload:
